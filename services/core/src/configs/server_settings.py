@@ -1,0 +1,6 @@
+HOST = '127.0.0.1'
+PORT = 8000
+DEBUG = False
+SSL = None
+WORKERS = 1
+ACCESS_LOG = False

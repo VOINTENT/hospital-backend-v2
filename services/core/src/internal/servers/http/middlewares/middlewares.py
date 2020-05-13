@@ -9,4 +9,3 @@ async def cors(request, response):
         response = await response
     response.headers['Access-Control-Allow-Origin'] = 'localhost:3000'
     response.headers['Access-Control-Allow-Credentials'] = True
-

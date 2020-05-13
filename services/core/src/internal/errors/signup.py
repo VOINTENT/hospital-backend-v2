@@ -1,0 +1,8 @@
+NOT_LAST_NAME = -301, 'Не введена фамилия'
+NOT_FIRST_NAME = -302, 'Не введено имя'
+NOT_MIDDLE_NAME = -303, 'Не введено отчество'
+NOT_PHONE_NUMBER = -304, 'Не введен номер телефона'
+NOT_EMAIL = -305, 'Не введен email'
+NOT_PASSWORD = -306, 'Не введен пароль'
+EMAIL_EXISTS = -307, 'Указанный email уже существует'
+PHONE_NUMBER_EXISTS = -308, 'Указанный номер телефона уже существует'

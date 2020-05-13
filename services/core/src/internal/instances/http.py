@@ -1,3 +1,6 @@
-from src.internal.servers.http.mainhttp import app
+main_app = None
 
-main_app = app
+
+def set_main_app(app):
+    global main_app
+    main_app = app

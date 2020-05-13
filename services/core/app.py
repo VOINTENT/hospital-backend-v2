@@ -1,17 +1,8 @@
-from src.internal.instances.http import main_app
-from src.configs.server_settings import HOST, PORT, DEBUG, SSL, WORKERS, ACCESS_LOG, AUTO_RELOAD
+from src.bootstrap.bootstrap import init_all
 
 
 def main():
-    main_app.run(
-        host=HOST,
-        port=PORT,
-        debug=DEBUG,
-        ssl=SSL,
-        workers=WORKERS,
-        access_log=ACCESS_LOG,
-        auto_reload=AUTO_RELOAD
-    )
+    init_all()
 
 
 if __name__ == '__main__':

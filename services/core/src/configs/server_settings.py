@@ -1,6 +1,7 @@
 HOST = '127.0.0.1'
 PORT = 8000
-DEBUG = False
+DEBUG = True
 SSL = None
 WORKERS = 1
-ACCESS_LOG = False
+ACCESS_LOG = True
+AUTO_RELOAD = False

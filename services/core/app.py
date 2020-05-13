@@ -1,5 +1,5 @@
 from src.internal.instances.http import main_app
-from src.configs.server_settings import HOST, PORT, DEBUG, SSL, WORKERS, ACCESS_LOG
+from src.configs.server_settings import HOST, PORT, DEBUG, SSL, WORKERS, ACCESS_LOG, AUTO_RELOAD
 
 
 def main():
@@ -9,7 +9,8 @@ def main():
         debug=DEBUG,
         ssl=SSL,
         workers=WORKERS,
-        access_log=ACCESS_LOG
+        access_log=ACCESS_LOG,
+        auto_reload=AUTO_RELOAD
     )
 
 

@@ -7,4 +7,4 @@ def add_cors(app):
         if isawaitable(response):
             response = await response
         response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000' 
-        response.headers['Access-Control-Allow-Credentials'] = True
+        response.headers['Access-Control-Allow-Credentials'] = 'true'

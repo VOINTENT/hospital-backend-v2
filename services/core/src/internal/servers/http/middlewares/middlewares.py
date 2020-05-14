@@ -12,9 +12,9 @@ def add_cors(app):
         response.headers['Access-Control-Request-Methods'] = 'GET,POST,PUT,DELETE,OPTIONS'
 
     @app.middleware('request')
-    async def cors_options(request, response):
+    async def cors_options(request):
         if isawaitable(request):
             request = await request
         
         if request.method == 'OPTIONS':
-        	return text('ok')
+            return text('ok')

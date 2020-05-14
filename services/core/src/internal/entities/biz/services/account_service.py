@@ -9,9 +9,6 @@ class AccountServiceImpl(AccountService):
     Класс является реализацией интерфейса AccService
     Каждый такой класс должен наследоваться от одного из интерфейсов в пакете services.interfaces
     """
-    @staticmethod
-    def signup(account: Account):
-        pass
 
     @staticmethod
     def login(account: Account):

@@ -1,11 +1,9 @@
 from src.internal.entities.biz.dao.postgre.patient_dao import PatientDaoImpl
-from src.internal.entities.biz.models.account import Account
 from src.internal.entities.biz.models.patient import Patient
 from src.internal.entities.biz.services.interfaces.patient_service import PatientService
 from src.internal.errors.common import DATABASE_MISTAKE
 from src.internal.errors.signup import EMAIL_EXISTS, PHONE_NUMBER_EXISTS
 from src.lib.utils.utls import get_hash
-from .interfaces.account_service import AccountService
 from src.internal.entities.biz.dao.postgre.account_dao import AccountDaoImpl
 
 
@@ -34,3 +32,7 @@ class PatientServiceImpl(PatientService):
             return None, DATABASE_MISTAKE
 
         return patient, None
+
+    @staticmethod
+    def get_by_account_id(account_id: int) -> (Patient or None, tuple or None):
+        return PatientDaoImpl().get_by_account_id(account_id)

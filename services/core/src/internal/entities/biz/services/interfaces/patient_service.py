@@ -10,3 +10,7 @@ class PatientService:
     @staticmethod
     def signup(patient: Patient):
         raise NotImplemented
+
+    @staticmethod
+    def get_by_account_id(account_id: int) -> Patient or None:
+        raise NotImplemented

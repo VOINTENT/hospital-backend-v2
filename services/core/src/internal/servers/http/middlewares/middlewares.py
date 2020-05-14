@@ -1,11 +1,20 @@
 from inspect import isawaitable
+from sanic.response import text
 
 
 def add_cors(app):
     @app.middleware('response')
-    async def cors(request, response):
+    async def cors_headers(request, response):
         if isawaitable(response):
             response = await response
         response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000' 
         response.headers['Access-Control-Allow-Credentials'] = 'true'
         response.headers['Access-Control-Request-Methods'] = 'GET,POST,PUT,DELETE,OPTIONS'
+
+    @app.middleware('request')
+    async def cors_options(request, response):
+        if isawaitable(request):
+            request = await request
+        
+        if request.method == 'OPTIONS':
+        	return text('ok')

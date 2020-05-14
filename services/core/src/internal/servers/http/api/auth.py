@@ -17,7 +17,7 @@ from src.lib.utils.utls import get_token
 auth = Blueprint('auth', url_prefix='/auth')
 
 
-@auth.route('/login/basic', methods=['POST'])
+@auth.route('/login/basic', methods=['POST', 'OPTIONS'])
 async def patient_login(request):
     data = request.form
 
@@ -37,7 +37,7 @@ async def patient_login(request):
     return resp
 
 
-@auth.route('/signup', methods=['POST'])
+@auth.route('/signup', methods=['POST', 'OPTIONS'])
 async def patient_signup(request):
     data = request.form
 
@@ -56,7 +56,7 @@ async def patient_signup(request):
     return resp
 
 
-@auth.route('/logout', methods=['DELETE'])
+@auth.route('/logout', methods=['DELETE', 'OPTIONS'])
 async def patient_logout(request):
     token = request.cookies.get('token')
     if not token:
@@ -67,6 +67,6 @@ async def patient_logout(request):
     return resp
 
 
-@auth.route('/restore-password', methods=['POST'])
+@auth.route('/restore-password', methods=['POST', 'OPTIONS'])
 async def patient_restore_password(request):
     return json(get_response(OK[0], OK[1]))

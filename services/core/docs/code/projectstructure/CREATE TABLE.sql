@@ -45,7 +45,7 @@ CREATE TABLE patient (
     last_name VARCHAR(50) NOT NULL,
     middle_name VARCHAR(50),
     gender SMALLINT NOT NULL CHECK (gender = 1 OR gender = 2 OR gender = 3),
-    birth_date timestamp without time zone NOT NULL,
+    birth_date timestamp without time zone,
     snils VARCHAR(14) UNIQUE,
     policy VARCHAR(16) UNIQUE
 );

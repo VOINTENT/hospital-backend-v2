@@ -7,7 +7,7 @@ class AbstractModel:
     Класс должен наследоваться всеми другими моделями
     """
 
-    def __init__(self, id: int, created_at: Any) -> None:
+    def __init__(self, id: int or None, created_at: Any) -> None:
         self._id = id
         self._created_at = created_at
 

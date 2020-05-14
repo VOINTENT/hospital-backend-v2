@@ -1,8 +1,6 @@
 from .dbs import create_pgsql_conn
 from .servers import create_server, run_server, add_listeners
 
-from src.internal.instances.http import main_app
-
 
 def init_all():
     create_pgsql_conn()

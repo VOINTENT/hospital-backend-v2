@@ -8,3 +8,4 @@ def create_conn(host, port, db_name, user, password):
         dbname=db_name,
         user=user,
         password=password)
+

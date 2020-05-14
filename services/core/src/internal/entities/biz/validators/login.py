@@ -1,5 +1,4 @@
-from marshmallow import Schema, fields, ValidationError
-from marshmallow.validate import Length
+from marshmallow import Schema, fields
 
 from src.internal.errors.login import NOT_EMAIL_OR_PHONE_NUMBER, NOT_PASSWORD
 

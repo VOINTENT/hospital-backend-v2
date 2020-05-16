@@ -23,9 +23,12 @@ class PatientSerializer:
 
     @staticmethod
     def _common_serialize(patient: Patient):
-        day = str(patient.birth_date.date().day)
-        month = str(patient.birth_date.date().month)
-        year = str(patient.birth_date.date().year)
+        birth_date = None
+        if patient.birth_date:
+            day = str(patient.birth_date.date().day)
+            month = str(patient.birth_date.date().month)
+            year = str(patient.birth_date.date().year)
+            birth_date = day + '-' + month + '-' + year
 
         return {
             'user_id': patient.account.id,
@@ -33,7 +36,7 @@ class PatientSerializer:
             'first_name': patient.first_name,
             'last_name': patient.last_name,
             'middle_name': patient.middle_name,
-            'birth_date': day + '-' + month + '-' + year,
+            'birth_date': birth_date,
             'snils': patient.snils,
             'policy': patient.policy,
             'email': patient.account.email,

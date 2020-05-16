@@ -1,7 +1,7 @@
 from src.internal.entities.biz.dao.interfaces.patient_dao import PatientDao
 from src.internal.entities.biz.models.account import Account
 from src.internal.entities.biz.models.patient import Patient
-from src.internal.errors.common import ACCOUNT_NOT_FOUND
+from src.internal.errors.common import ACCOUNT_NOT_FOUND, DATABASE_MISTAKE
 
 
 class PatientDaoImpl(PatientDao):
@@ -107,3 +107,28 @@ class PatientDaoImpl(PatientDao):
                 return patient, None
             except:
                 self.conn.commit()
+                return None, DATABASE_MISTAKE
+
+    def is_policy_exists(self, policy: str) -> bool:
+        with self.conn.cursor() as cur:
+            cur.execute("""
+                SELECT COUNT(*)
+                FROM patient
+                WHERE policy = %s
+            """, (policy,))
+            data = cur.fetchall()
+            if data[0][0] != 0:
+                return True
+            return False
+
+    def is_snils_exists(self, snils: str) -> bool:
+        with self.conn.cursor() as cur:
+            cur.execute("""
+                SELECT COUNT(*)
+                FROM patient
+                WHERE snils = %s
+            """, (snils,))
+            data = cur.fetchall()
+            if data[0][0] != 0:
+                return True
+            return False

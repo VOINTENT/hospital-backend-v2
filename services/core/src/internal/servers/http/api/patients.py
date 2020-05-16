@@ -21,7 +21,7 @@ async def patient(request):
     if request.method == 'GET':
         return patient_detail(request)
     elif request.method == 'PATCH':
-        return patient_edit(request)
+        return patient_update(request)
 
 
 def patient_detail(request):
@@ -43,7 +43,7 @@ def patient_detail(request):
     return json(get_response(OK[0], OK[1], data=resp_data))
 
 
-def patient_edit(request):
+def patient_update(request):
     token = request.cookies.get('token')
     if not token:
         return json(get_response(NOT_AUTHORIZED[0], NOT_AUTHORIZED[1]), 401)

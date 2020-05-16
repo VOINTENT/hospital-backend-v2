@@ -10,3 +10,9 @@ class PatientDao(BaseDao):
 
     def get_by_account_id(self, account_id: int) -> (Patient or None, bool):
         raise NotImplemented
+
+    def is_policy_exists(self, policy: str) -> bool:
+        raise NotImplemented
+
+    def is_snils_exists(self, snils: str) -> bool:
+        raise NotImplemented

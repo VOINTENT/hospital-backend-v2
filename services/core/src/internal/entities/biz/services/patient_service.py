@@ -2,6 +2,7 @@ from src.internal.entities.biz.dao.postgre.patient_dao import PatientDaoImpl
 from src.internal.entities.biz.models.patient import Patient
 from src.internal.entities.biz.services.interfaces.patient_service import PatientService
 from src.internal.errors.common import DATABASE_MISTAKE
+from src.internal.errors.patient import SNILS_EXISTS, POLICY_EXISTS
 from src.internal.errors.signup import EMAIL_EXISTS, PHONE_NUMBER_EXISTS
 from src.lib.utils.utls import get_hash
 from src.internal.entities.biz.dao.postgre.account_dao import AccountDaoImpl
@@ -39,4 +40,12 @@ class PatientServiceImpl(PatientService):
 
     @staticmethod
     def update(patient: Patient):
+        patient_dao = PatientDaoImpl()
+
+        if patient.snils and patient_dao.is_snils_exists(patient.snils):
+            return None, SNILS_EXISTS
+
+        if patient.policy and patient_dao.is_policy_exists(patient.policy):
+            return None, POLICY_EXISTS
+
         return PatientDaoImpl().update(patient)

@@ -42,10 +42,10 @@ class PatientServiceImpl(PatientService):
     def update(patient: Patient):
         patient_dao = PatientDaoImpl()
 
-        if patient.snils and patient_dao.is_snils_exists(patient.snils):
+        if patient.snils and patient_dao.is_snils_exists(patient):
             return None, SNILS_EXISTS
 
-        if patient.policy and patient_dao.is_policy_exists(patient.policy):
+        if patient.policy and patient_dao.is_policy_exists(patient):
             return None, POLICY_EXISTS
 
         return PatientDaoImpl().update(patient)

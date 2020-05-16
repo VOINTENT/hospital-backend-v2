@@ -109,25 +109,25 @@ class PatientDaoImpl(PatientDao):
                 self.conn.commit()
                 return None, DATABASE_MISTAKE
 
-    def is_policy_exists(self, policy: str) -> bool:
+    def is_policy_exists(self, patient: Patient) -> bool:
         with self.conn.cursor() as cur:
             cur.execute("""
                 SELECT COUNT(*)
                 FROM patient
-                WHERE policy = %s
-            """, (policy,))
+                WHERE policy = %s AND id <> %s
+            """, (patient.policy, patient.id))
             data = cur.fetchall()
             if data[0][0] != 0:
                 return True
             return False
 
-    def is_snils_exists(self, snils: str) -> bool:
+    def is_snils_exists(self, patient: Patient) -> bool:
         with self.conn.cursor() as cur:
             cur.execute("""
                 SELECT COUNT(*)
                 FROM patient
-                WHERE snils = %s
-            """, (snils,))
+                WHERE snils = %s AND id <> %s
+            """, (patient.snils, patient.id))
             data = cur.fetchall()
             if data[0][0] != 0:
                 return True

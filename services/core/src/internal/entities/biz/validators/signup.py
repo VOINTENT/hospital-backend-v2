@@ -5,32 +5,32 @@ from src.internal.errors.signup import *
 
 def validate_last_name(value: str):
     if len(value) > 50:
-        return ValidationError(LAST_NAME_TOO_LARGE)
+        raise ValidationError(LAST_NAME_TOO_LARGE)
 
 
 def validate_first_name(value: str):
     if len(value) > 50:
-        return ValidationError(FIRST_NAME_TOO_LARGE)
+        raise ValidationError(FIRST_NAME_TOO_LARGE)
 
 
 def validate_middle_name(value: str):
     if len(value) > 50:
-        return ValidationError(MIDDLE_NAME_TOO_LARGE)
+        raise ValidationError(MIDDLE_NAME_TOO_LARGE)
 
 
 def validate_phone_number(value: str):
     if len(value) > 15:
-        return ValidationError(PHONE_NUMBER_TOO_LARGE)
+        raise ValidationError(PHONE_NUMBER_TOO_LARGE)
 
 
 def validate_email(value: str):
     if len(value) > 50:
-        return ValidationError(EMAIL_TOO_LARGE)
+        raise ValidationError(EMAIL_TOO_LARGE)
 
 
 def validate_password(value: str):
     if len(value) > 200:
-        return ValidationError(PASSWORD_TOO_LARGE)
+        raise ValidationError(PASSWORD_TOO_LARGE)
 
 
 class SignupSchema(Schema):

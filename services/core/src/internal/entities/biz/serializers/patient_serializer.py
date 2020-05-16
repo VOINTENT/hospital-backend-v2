@@ -1,3 +1,5 @@
+import datetime
+
 from src.internal.entities.biz.models.account import Account
 
 # TODO Вынести куда-нибдудь
@@ -21,13 +23,17 @@ class PatientSerializer:
 
     @staticmethod
     def _common_serialize(patient: Patient):
+        day = str(patient.birth_date.date().day)
+        month = str(patient.birth_date.date().month)
+        year = str(patient.birth_date.date().year)
+
         return {
             'user_id': patient.account.id,
             'patient_id': patient.id,
             'first_name': patient.first_name,
             'last_name': patient.last_name,
             'middle_name': patient.middle_name,
-            'birth_date': patient.birth_date,
+            'birth_date': day + '-' + month + '-' + year,
             'snils': patient.snils,
             'policy': patient.policy,
             'email': patient.account.email,
@@ -36,6 +42,7 @@ class PatientSerializer:
 
     @staticmethod
     def _only_id_serialize(account: Account):
+
         return {
             'id': account.id
         }

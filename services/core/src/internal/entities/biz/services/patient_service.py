@@ -36,3 +36,7 @@ class PatientServiceImpl(PatientService):
     @staticmethod
     def get_by_account_id(account_id: int) -> (Patient or None, tuple or None):
         return PatientDaoImpl().get_by_account_id(account_id)
+
+    @staticmethod
+    def update(patient: Patient):
+        return PatientDaoImpl().update(patient)

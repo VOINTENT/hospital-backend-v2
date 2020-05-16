@@ -1,4 +1,3 @@
-# from src.internal.instances.dbs import main_pgsql_connect
 import src.internal.instances.dbs as dbs
 
 
@@ -16,6 +15,9 @@ class BaseDao:
         raise NotImplemented
 
     def add(self, obj: object) -> (None, bool):
+        raise NotImplemented
+
+    def update(self, obj) -> (object, bool):
         raise NotImplemented
 
     def remove(self, obj: object) -> (None, bool):

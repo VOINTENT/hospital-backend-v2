@@ -14,3 +14,7 @@ class PatientService:
     @staticmethod
     def get_by_account_id(account_id: int) -> Patient or None:
         raise NotImplemented
+
+    @staticmethod
+    def update(patient: Patient):
+        raise NotImplemented

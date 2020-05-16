@@ -34,7 +34,7 @@ class AccountDaoImpl(AccountDao):
 
     def get_by_email_or_phone_number_and_password(self, email_or_phone_number: str, password: str) -> (None, None):
         with self.conn.cursor() as cur:
-            cur.execute(f"""
+            cur.execute("""
                 SELECT email, phone_number, patient.id, account_id, first_name, last_name, middle_name, gender, 
                 birth_date, snils, policy
                 FROM account INNER JOIN patient ON account.id = patient.account_id

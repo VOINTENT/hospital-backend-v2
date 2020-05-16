@@ -10,9 +10,10 @@ from .department import Department
 
 class Doctor(AbstractModel):
 
-    def __init__(self, id: int, created_at: Any, account: Account, first_name: str, last_name: str, middle_name: str,
-                 gender: int, birth_date: Any, speciality: Speciality, department: Department, cabinets: List[Cabinet],
-                 services: List[Service]) -> None:
+    def __init__(self, id: int = None, created_at: Any = None, account: Account = None, first_name: str = None,
+                 last_name: str = None, middle_name: str = None, gender: int = None, birth_date: Any = None,
+                 speciality: Speciality = None, department: Department = None, cabinets: List[Cabinet] = None,
+                 services: List[Service] = None) -> None:
 
         super().__init__(id, created_at)
         self.account = account

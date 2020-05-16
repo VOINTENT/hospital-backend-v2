@@ -53,14 +53,14 @@ CREATE TABLE patient (
 CREATE TABLE doctor (
     id BIGINT NOT NULL DEFAULT nextval('doctor_id_seq') PRIMARY KEY,
     created_at timestamp without time zone NOT NULL DEFAULT current_timestamp,
-    account_id BIGINT NOT NULL UNIQUE REFERENCES account(id),
+    account_id BIGINT UNIQUE REFERENCES account(id),
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     middle_name VARCHAR(50),
-    gender SMALLINT NOT NULL CHECK (gender = 1 OR gender = 2 OR gender = 3),
-    birth_date timestamp without time zone NOT NULL,
-    speciality_id BIGINT NOT NULL REFERENCES speciality(id),
-    department_id BIGINT NOT NULL REFERENCES department(id)
+    gender SMALLINT NOT NULL CHECK (gender = 1 OR gender = 2 OR gender = 3) DEFAULT 3,
+    birth_date timestamp without time zone,
+    speciality_id BIGINT REFERENCES speciality(id),
+    department_id BIGINT REFERENCES department(id)
 );
 
 CREATE TABLE cabinet (
@@ -128,11 +128,13 @@ CREATE TABLE doctor_service (
     created_at timestamp without time zone NOT NULL DEFAULT current_timestamp,
     doctor_id BIGINT NOT NULL REFERENCES doctor(id),
     service_id BIGINT NOT NULL REFERENCES service(id)
+    CONSTRAINT UNIQUE (doctor_id, service_id)
 );
 
 CREATE TABLE doctor_cabinet (
     id BIGINT NOT NULL DEFAULT nextval('doctor_cabinet_seq') PRIMARY KEY,
     created_at timestamp without time zone NOT NULL DEFAULT current_timestamp,
     doctor_id BIGINT NOT NULL REFERENCES doctor(id),
-    cabinet_id BIGINT NOT NULL REFERENCES cabinet(id)
+    cabinet_id BIGINT NOT NULL REFERENCES cabinet(id),
+    CONSTRAINT UNIQUE (doctor_id, cabinet_id)
 );

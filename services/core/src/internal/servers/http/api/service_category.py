@@ -1,16 +1,16 @@
 from sanic import Blueprint
 from sanic.response import json
 
-from src.internal.entities.biz.serializers.doctor_serializer import DoctorSerializer, FOR_FILTER
-from src.internal.entities.biz.services.doctor_service import DoctorServiceImpl
+from src.internal.entities.biz.serializers.service_category_serializer import ServiceCategorySerializer, FOR_FILTER
+from src.internal.entities.biz.services.service_category_service import ServiceCategoryServiceImpl
 from src.internal.errors.common import NOT_AUTHORIZED, NOT_VALID_TOKEN, OK
 from src.internal.servers.http.answer import get_response
 from src.lib.utils.utls import get_payload
 
-doctors = Blueprint('doctors', url_prefix='/doctors')
+service_categories = Blueprint('service_categories', url_prefix='/service_categories')
 
 
-@doctors.route('/')
+@service_categories.route('/')
 def get_all_service_categories(request):
     token = request.cookies.get('token')
     if not token:
@@ -24,6 +24,6 @@ def get_all_service_categories(request):
     if err:
         return json(get_response(err[0], err[1]), 400)
 
-    resp_data = [ServiceCategory().serialize(service_categorie, FOR_FILTER) for service_categorie in service_categories]
+    resp_data = [ServiceCategorySerializer().serialize(service_category, FOR_FILTER) for service_category in service_categories]
 
     return json(get_response(OK[0], OK[1], data=resp_data))

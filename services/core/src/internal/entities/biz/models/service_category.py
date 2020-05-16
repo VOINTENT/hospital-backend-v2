@@ -7,7 +7,6 @@ from .account import Account
 
 class ServiceCategory(AbstractModel):
 
-    def __init__(self, id: int, created_at: Any, name: str) -> None:
-
+    def __init__(self, id: int = None, created_at: Any = None, name: str = None) -> None:
         super().__init__(id, created_at)
-        self._name = name
+        self.name = name

@@ -48,59 +48,62 @@ class PatientDaoImpl(PatientDao):
 
     def update(self, patient: Patient) -> (Patient or None, tuple or None):
         with self.conn.cursor() as cur:
-            SQL_UPDATE = """
-            UPDATE patient
-            SET 
-            """
+            try:
+                SQL_UPDATE = """
+                UPDATE patient
+                SET 
+                """
 
-            updated_values = []
+                updated_values = []
 
-            if patient.first_name is not None:
-                SQL_UPDATE += ', ' if updated_values else ''
-                SQL_UPDATE += 'first_name = %s'
-                updated_values.append(patient.first_name)
+                if patient.first_name is not None:
+                    SQL_UPDATE += ', ' if updated_values else ''
+                    SQL_UPDATE += 'first_name = %s'
+                    updated_values.append(patient.first_name)
 
-            if patient.last_name is not None:
-                SQL_UPDATE += ', ' if updated_values else ''
-                SQL_UPDATE += 'last_name = %s'
-                updated_values.append(patient.last_name)
+                if patient.last_name is not None:
+                    SQL_UPDATE += ', ' if updated_values else ''
+                    SQL_UPDATE += 'last_name = %s'
+                    updated_values.append(patient.last_name)
 
-            if patient.middle_name is not None:
-                SQL_UPDATE += ', ' if updated_values else ''
-                SQL_UPDATE += 'middle_name = %s'
-                updated_values.append(patient.middle_name)
+                if patient.middle_name is not None:
+                    SQL_UPDATE += ', ' if updated_values else ''
+                    SQL_UPDATE += 'middle_name = %s'
+                    updated_values.append(patient.middle_name)
 
-            if patient.gender is not None:
-                SQL_UPDATE += ', ' if updated_values else ''
-                SQL_UPDATE += 'gender = %s'
-                updated_values.append(patient.gender)
+                if patient.gender is not None:
+                    SQL_UPDATE += ', ' if updated_values else ''
+                    SQL_UPDATE += 'gender = %s'
+                    updated_values.append(patient.gender)
 
-            if patient.birth_date is not None:
-                SQL_UPDATE += ', ' if updated_values else ''
-                SQL_UPDATE += 'birth_date = %s'
-                updated_values.append(patient.birth_date)
+                if patient.birth_date is not None:
+                    SQL_UPDATE += ', ' if updated_values else ''
+                    SQL_UPDATE += 'birth_date = %s'
+                    updated_values.append(patient.birth_date)
 
-            if patient.snils is not None:
-                SQL_UPDATE += ', ' if updated_values else ''
-                SQL_UPDATE += 'snils = %s'
-                updated_values.append(patient.snils)
+                if patient.snils is not None:
+                    SQL_UPDATE += ', ' if updated_values else ''
+                    SQL_UPDATE += 'snils = %s'
+                    updated_values.append(patient.snils)
 
-            if patient.policy is not None:
-                SQL_UPDATE += ', ' if updated_values else ''
-                SQL_UPDATE += 'policy = %s'
-                updated_values.append(patient.policy)
+                if patient.policy is not None:
+                    SQL_UPDATE += ', ' if updated_values else ''
+                    SQL_UPDATE += 'policy = %s'
+                    updated_values.append(patient.policy)
 
-            if not updated_values:
+                if not updated_values:
+                    return patient, None
+
+                SQL_UPDATE += """
+                    WHERE account_id = %s
+                    RETURNING id
+                """
+                updated_values.append(patient.account.id)
+
+                cur.execute(SQL_UPDATE, updated_values)
+                self.conn.commit()
+                if not cur.fetchall():
+                    return None, ACCOUNT_NOT_FOUND
                 return patient, None
-
-            SQL_UPDATE += """
-                WHERE account_id = %s
-                RETURNING id
-            """
-            updated_values.append(patient.account.id)
-
-            cur.execute(SQL_UPDATE, updated_values)
-            self.conn.commit()
-            if not cur.fetchall():
-                return None, ACCOUNT_NOT_FOUND
-            return patient, None
+            except:
+                self.conn.commit()

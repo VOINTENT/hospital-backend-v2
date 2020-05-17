@@ -15,7 +15,7 @@ patients_loc = Blueprint('patients', url_prefix='')
 patients = Blueprint.group(auth, patients_loc, url_prefix='/patients')
 
 
-@patients_loc.route('/', methods=['PATCH', 'GET'])
+@patients_loc.route('/', methods=['PATCH', 'GET', 'OPTIONS'])
 async def patient(request):
 
     if request.method == 'GET':

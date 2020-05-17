@@ -12,7 +12,7 @@ from src.lib.utils.utls import get_payload
 registers = Blueprint('registers', url_prefix='/registers')
 
 
-@registers.route('/', methods=['POST', 'GET'])
+@registers.route('/', methods=['POST', 'GET', 'OPTIONS'])
 def register(request):
 
     if request.method == 'POST':
@@ -58,7 +58,7 @@ def register(request):
         return json(get_response(OK[0], OK[1], data=resp_data))
 
 
-@registers.route('/<register_id>', methods=['DELETE'])
+@registers.route('/<register_id>', methods=['DELETE', 'OPTIONS'])
 def register_delete(request, register_id):
     token = request.cookies.get('token')
     if not token:

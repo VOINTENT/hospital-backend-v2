@@ -30,12 +30,16 @@ class PatientSerializer:
             year = str(patient.birth_date.date().year)
             birth_date = day + '-' + month + '-' + year
 
+        if patient.gender is None:
+            patient.gender = 3
+
         return {
             'user_id': patient.account.id,
             'patient_id': patient.id,
             'first_name': patient.first_name,
             'last_name': patient.last_name,
             'middle_name': patient.middle_name,
+            'gender': patient.gender,
             'birth_date': birth_date,
             'snils': patient.snils,
             'policy': patient.policy,

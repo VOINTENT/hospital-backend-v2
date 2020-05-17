@@ -25,7 +25,7 @@ class ReceptionLineDaoImpl(ReceptionLineDao):
                 INNER JOIN doctor ON reception_plan.doctor_id = doctor.id
                 INNER JOIN service_category ON service.service_category_id = service_category.id
             WHERE
-                reception_line.id not in (SELECT reception_line.id FROM register)
+                reception_line.id not in (SELECT reception_line_id FROM register)
             """)
             data = cur.fetchall()
             reception_lines = [ReceptionLine(

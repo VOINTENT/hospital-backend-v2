@@ -8,7 +8,7 @@ from .abstract_model import AbstractModel
 
 class ReceptionLine(AbstractModel):
 
-    def __init__(self, id: int, created_at: Any, reception_plan: ReceptionPlan, time: Any) -> None:
+    def __init__(self, id: int = None, created_at: Any = None, reception_plan: ReceptionPlan = None, time: Any = None) -> None:
         super().__init__(id, created_at)
         self.reception_plan = reception_plan
         self.time = time

@@ -29,3 +29,23 @@ INSERT INTO doctor_service(doctor_id, service_id) VALUES
 (4, 4),
 (5, 5),
 (6, 1);
+
+
+INSERT INTO reception_plan(service_id, doctor_id, date) VALUES
+(1, 1, '2020-05-18'),
+(2, 2, '2020-05-18'),
+(3, 3, '2020-05-18'),
+(4, 4, '2020-05-18'),
+(5, 5, '2020-05-18'),
+(1, 6, '2020-05-18');
+
+
+INSERT INTO reception_line(reception_plan_id, time) VALUES
+(1, '08:00'),
+(1, '08:30'),
+(1, '09:00'),
+(1, '09:30'),
+(1, '10:00'),
+(1, '10:30'),
+(1, '11:00'),
+(1, '11:30');

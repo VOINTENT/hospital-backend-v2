@@ -19,3 +19,20 @@ def get_payload(token: str) -> dict or None:
         return jwt.decode(token, secret_key, algorithm='HS256')
     except Exception:  # TODO
         return None
+
+
+def serialize_date(date: datetime.date):
+    if not date:
+        return None
+
+    day = str(date.day)
+    month = str(date.month)
+    year = str(date.year)
+    return day + '-' + month + '-' + year
+
+
+def serialize_time(time: datetime.time):
+    if not time:
+        return None
+
+    return str(time)[:5]

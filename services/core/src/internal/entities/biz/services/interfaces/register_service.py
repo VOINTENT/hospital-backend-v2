@@ -1,3 +1,5 @@
+from typing import List
+
 from src.internal.entities.biz.models.register import Register
 
 
@@ -9,4 +11,12 @@ class RegisterService:
 
     @staticmethod
     def add(register: Register) -> (Register or None, None or tuple):
+        raise NotImplemented
+    
+    @staticmethod
+    def get_all_by_account_id(patient_id: int) -> (List[Register] or None, None or tuple):
+        raise NotImplemented
+
+    @staticmethod
+    def delete_my_register(register_id: int, account_id: int) -> (Register or None, None or tuple):
         raise NotImplemented

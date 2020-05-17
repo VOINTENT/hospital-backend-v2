@@ -1,8 +1,10 @@
+from typing import List
+
 from src.internal.entities.biz.dao.postgre.patient_dao import PatientDaoImpl
 from src.internal.entities.biz.dao.postgre.register_dao import RegisterDaoImpl
 from src.internal.entities.biz.models.register import Register
 from src.internal.entities.biz.services.interfaces.register_service import RegisterService
-from src.internal.errors.register import RECEPTION_LINE_BUSY
+from src.internal.errors.register import RECEPTION_LINE_BUSY, NOT_AWAILABLE_REGISTER
 
 
 class RegisterServiceImpl(RegisterService):
@@ -22,3 +24,24 @@ class RegisterServiceImpl(RegisterService):
             return None, RECEPTION_LINE_BUSY
 
         return register_dao.add(register)
+
+    @staticmethod
+    def get_all_by_account_id(account_id: int) -> (List[Register] or None, None or tuple):
+        patient_dao = PatientDaoImpl()
+        register_dao = RegisterDaoImpl()
+
+        patient, _ = patient_dao.get_by_account_id(account_id)
+
+        return register_dao.get_all_by_patient_id(patient.id)
+
+    @staticmethod
+    def delete_my_register(register_id: int, account_id: int) -> (Register or None, None or tuple):
+        patient_dao = PatientDaoImpl()
+        register_dao = RegisterDaoImpl()
+
+        patient, _ = patient_dao.get_by_account_id(account_id)
+
+        if not register_dao.is_register_own_patient(register_id, patient.id):
+            return None, NOT_AWAILABLE_REGISTER
+
+        return register_dao.remove_by_id(register_id)

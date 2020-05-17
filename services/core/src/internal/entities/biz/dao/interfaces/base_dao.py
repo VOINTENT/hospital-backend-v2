@@ -11,7 +11,7 @@ class BaseDao:
     def __init__(self) -> None:
         self.conn = dbs.main_pgsql_connect
 
-    def get_by_id(self, id: int) -> (object, bool):
+    def get_by_id(self, obj_id: int) -> (object, bool):
         raise NotImplemented
 
     def add(self, obj: object) -> (None, bool):
@@ -23,8 +23,7 @@ class BaseDao:
     def remove(self, obj: object) -> (None, bool):
         raise NotImplemented
 
-    @staticmethod
-    def remove_by_id(id: int) -> (None, bool):
+    def remove_by_id(self, obj_id: int) -> (None, bool):
         raise NotImplemented
 
     def get_all(self) -> (list, bool):

@@ -20,7 +20,31 @@ def get_all_free_reception_lines(request):
     if not payload:
         return json(get_response(NOT_VALID_TOKEN[0], NOT_VALID_TOKEN[1]), 401)
 
-    reception_lines, err = ReceptionLineServiceImpl.get_all_free()
+    args = request.args
+    filter = []
+    if args.get('doctor_id') and args.get('doctor_id').isdigit():
+        filter.append(('doctor.id = ', int(args.get('doctor_id'))))
+
+    if args.get('service_id') and args.get('service_id').isdigit():
+        filter.append(('service.id = ', int(args.get('service_id'))))
+
+    if args.get('service_category_id') and args.get('service_category_id').isdigit():
+        filter.append(('service_category.id = ', int(args.get('service_category_id'))))
+
+    if args.get('date_start'):
+        filter.append(('date >= ', args.get('date_start')))
+
+    if args.get('date_finish'):
+        filter.append(('date <= ', args.get('date_finish')))
+
+    if args.get('time_start'):
+        filter.append(('time >= ', args.get('time_start')))
+
+    if args.get('time_finish'):
+        filter.append(('time <= ', args.get('time_finish')))
+
+
+    reception_lines, err = ReceptionLineServiceImpl.get_all_free_by_filter(filter)
     if err:
         return json(get_response(err[0], err[1]), 400)
 

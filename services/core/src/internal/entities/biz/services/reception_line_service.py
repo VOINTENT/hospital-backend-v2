@@ -12,5 +12,5 @@ class ReceptionLineServiceImpl(ReceptionLineService):
     """
 
     @staticmethod
-    def get_all_free() -> (List[ReceptionLine] or None, tuple or None):
-        return ReceptionLineDaoImpl().get_all_free()
+    def get_all_free_by_filter(filter: list) -> (List[ReceptionLine] or None, tuple or None):
+        return ReceptionLineDaoImpl().get_all_free_by_filter(filter)

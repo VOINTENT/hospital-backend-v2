@@ -15,9 +15,10 @@ class ReceptionLineDaoImpl(ReceptionLineDao):
     Каждый такой класс должен являться реализацией соответствующего интерфейса из пакета dao.interfaces
     """
 
-    def get_all_free(self) -> (List[ReceptionLine], None or tuple):
+    def get_all_free_by_filter(self, filter: list) -> (List[ReceptionLine], None or tuple):
         with self.conn.cursor() as cur:
-            cur.execute("""
+
+            sql = """
             SELECT reception_line.id, service.id, service.name, service_category.id, service_category.name, doctor.id, first_name, last_name, middle_name, date, time
             FROM reception_line 
                 INNER JOIN reception_plan ON reception_line.id = reception_plan.id 
@@ -26,7 +27,16 @@ class ReceptionLineDaoImpl(ReceptionLineDao):
                 INNER JOIN service_category ON service.service_category_id = service_category.id
             WHERE
                 reception_line.id not in (SELECT reception_line_id FROM register)
-            """)
+            """
+
+            values = []
+            for key, value in filter:
+                values.append(value)
+                sql += f"""
+                    AND {key} %s
+                """
+
+            cur.execute(sql, values)
             data = cur.fetchall()
             reception_lines = [ReceptionLine(
                                     id=row[0],

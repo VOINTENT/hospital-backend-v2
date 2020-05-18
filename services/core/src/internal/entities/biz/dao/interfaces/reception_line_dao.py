@@ -10,5 +10,5 @@ class ReceptionLineDao(BaseDao):
     Каждый такой интерфейс должен наследовать BaseDao
     """
 
-    def get_all_free(self) -> (List[ReceptionLine], None or tuple):
+    def get_all_free_by_filter(self, filter: list) -> (List[ReceptionLine], None or tuple):
         raise NotImplemented

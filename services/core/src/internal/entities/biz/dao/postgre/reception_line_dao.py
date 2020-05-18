@@ -21,7 +21,7 @@ class ReceptionLineDaoImpl(ReceptionLineDao):
             sql = """
             SELECT reception_line.id, service.id, service.name, service_category.id, service_category.name, doctor.id, first_name, last_name, middle_name, date, time
             FROM reception_line 
-                INNER JOIN reception_plan ON reception_line.id = reception_plan.id 
+                INNER JOIN reception_plan ON reception_line.reception_plan_id = reception_plan.id 
                 INNER JOIN service ON reception_plan.service_id = service.id
                 INNER JOIN doctor ON reception_plan.doctor_id = doctor.id
                 INNER JOIN service_category ON service.service_category_id = service_category.id

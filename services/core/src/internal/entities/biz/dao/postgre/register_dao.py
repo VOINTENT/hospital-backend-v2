@@ -7,6 +7,8 @@ from src.internal.entities.biz.models.reception_plan import ReceptionPlan
 from src.internal.entities.biz.models.register import Register
 from src.internal.entities.biz.models.service import Service
 from src.internal.entities.biz.models.service_category import ServiceCategory
+from src.internal.errors.common import DATABASE_MISTAKE
+from src.internal.errors.register import TOO_MANY_REGISTERS
 
 
 class RegisterDaoImpl(RegisterDao):
@@ -17,12 +19,16 @@ class RegisterDaoImpl(RegisterDao):
 
     def add(self, register: Register) -> (Register or None, None or tuple):
         with self.conn.cursor() as cur:
-            cur.execute("""
-                INSERT INTO register(reception_line_id, patient_id) VALUES
-                (%s, %s)
-            """, (register.reception_line.id, register.patient.id))
-            self.conn.commit()
-            return register, None
+            try:
+                cur.execute("""
+                    INSERT INTO register(reception_line_id, patient_id) VALUES
+                    (%s, %s)
+                """, (register.reception_line.id, register.patient.id))
+                self.conn.commit()
+                return register, None
+            except:
+                self.conn.commit()
+                return None, DATABASE_MISTAKE
 
     def is_reception_line_busy(self, reception_line: ReceptionLine) -> bool:
         with self.conn.cursor() as cur:
@@ -89,10 +95,26 @@ class RegisterDaoImpl(RegisterDao):
 
     def remove_by_id(self, register_id: int) -> (Register or None, None or tuple):
         with self.conn.cursor() as cur:
+            try:
+                cur.execute("""
+                    DELETE 
+                    FROM register
+                    WHERE id = %s
+                """, (register_id, ))
+                self.conn.commit()
+                return register_id, None
+            except:
+                self.conn.commit()
+                return None, DATABASE_MISTAKE
+
+    def is_patient_has_too_many_registers(self, patient_id: int) -> bool:
+        with self.conn.cursor() as cur:
             cur.execute("""
-                DELETE 
+                SELECT COUNT(*)
                 FROM register
-                WHERE id = %s
-            """, (register_id, ))
-            self.conn.commit()
-            return register_id, None
+                WHERE patient_id = %s
+            """, (patient_id, ))
+            if cur.fetchall()[0][0] >= 3:
+                return True
+            return False
+

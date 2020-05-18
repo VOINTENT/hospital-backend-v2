@@ -4,7 +4,7 @@ from src.internal.entities.biz.dao.postgre.patient_dao import PatientDaoImpl
 from src.internal.entities.biz.dao.postgre.register_dao import RegisterDaoImpl
 from src.internal.entities.biz.models.register import Register
 from src.internal.entities.biz.services.interfaces.register_service import RegisterService
-from src.internal.errors.register import RECEPTION_LINE_BUSY, NOT_AWAILABLE_REGISTER
+from src.internal.errors.register import RECEPTION_LINE_BUSY, NOT_AWAILABLE_REGISTER, TOO_MANY_REGISTERS
 
 
 class RegisterServiceImpl(RegisterService):
@@ -22,6 +22,9 @@ class RegisterServiceImpl(RegisterService):
 
         if register_dao.is_reception_line_busy(register.reception_line):
             return None, RECEPTION_LINE_BUSY
+
+        if register_dao.is_patient_has_too_many_registers(register.patient.id):
+            return None, TOO_MANY_REGISTERS
 
         return register_dao.add(register)
 

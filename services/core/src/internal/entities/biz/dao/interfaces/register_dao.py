@@ -19,3 +19,6 @@ class RegisterDao(BaseDao):
 
     def is_register_own_patient(self, register_id: int, patient_id: int) -> bool:
         raise NotImplemented
+
+    def is_patient_has_too_many_registers(self, patient_id: int) -> bool:
+        raise NotImplemented

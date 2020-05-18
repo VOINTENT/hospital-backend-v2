@@ -23,15 +23,6 @@ class AccountDaoImpl(AccountDao):
             account.id = cur.fetchall()[0][0]
             return account, False
 
-    def remove(self, acc: Account) -> (None, bool):
-        pass
-
-    def remove_by_id(self, id: int) -> (None, bool):
-        pass
-
-    def get_all(self) -> (list, bool):
-        pass
-
     def get_by_email_or_phone_number_and_password(self, email_or_phone_number: str, password: str) -> (None, None):
         with self.conn.cursor() as cur:
             cur.execute("""

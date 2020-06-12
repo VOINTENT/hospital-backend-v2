@@ -15,43 +15,49 @@ class AccountDaoImpl(AccountDao):
 
     def add(self, account: Account) -> (Account, bool):
         with self.conn.cursor() as cur:
-            cur.execute("""
-            INSERT INTO account(email, phone_number, password, is_active, user_type) 
-            VALUES (%s, %s, %s, %s, %s) RETURNING id;
-            """, (account.email, account.phone_number, account.password, True, 'patient'))
-            self.conn.commit()
-            account.id = cur.fetchall()[0][0]
-            return account, False
+            try:
+                cur.execute("""
+                INSERT INTO account(email, phone_number, password, is_active, user_type) 
+                VALUES (%s, %s, %s, %s, %s) RETURNING id;
+                """, (account.email, account.phone_number, account.password, True, 'patient'))
+                self.conn.commit()
+                account.id = cur.fetchall()[0][0]
+                return account, False
+            except:
+                self.conn.commit()
 
     def get_by_email_or_phone_number_and_password(self, email_or_phone_number: str, password: str) -> (None, None):
         with self.conn.cursor() as cur:
-            cur.execute("""
-                SELECT email, phone_number, patient.id, account_id, first_name, last_name, middle_name, gender, 
-                birth_date, snils, policy
-                FROM account INNER JOIN patient ON account.id = patient.account_id
-                WHERE account.user_type = 'patient' AND (account.email = %s OR account.phone_number = %s) 
-                AND account.password = %s;
-            """, (email_or_phone_number, email_or_phone_number, password))
-            data = cur.fetchall()
-            if len(data) == 0:
-                return None, WRONG_EMAIL_OR_PHONE_NUMBER
+            try:
+                cur.execute("""
+                    SELECT email, phone_number, patient.id, account_id, first_name, last_name, middle_name, gender, 
+                    birth_date, snils, policy
+                    FROM account INNER JOIN patient ON account.id = patient.account_id
+                    WHERE account.user_type = 'patient' AND (account.email = %s OR account.phone_number = %s) 
+                    AND account.password = %s;
+                """, (email_or_phone_number, email_or_phone_number, password))
+                data = cur.fetchall()
+                if len(data) == 0:
+                    return None, WRONG_EMAIL_OR_PHONE_NUMBER
 
-            patient_data = data[0]
-            return Patient(
-                id=patient_data[2],
-                account=Account(
-                    id=patient_data[3],
-                    email=patient_data[0],
-                    phone_number=patient_data[1]
-                ),
-                first_name=patient_data[4],
-                last_name=patient_data[5],
-                middle_name=patient_data[6],
-                gender=patient_data[7],
-                birth_date=patient_data[8],
-                snils=patient_data[9],
-                policy=patient_data[10]
-            ), None
+                patient_data = data[0]
+                return Patient(
+                    id=patient_data[2],
+                    account=Account(
+                        id=patient_data[3],
+                        email=patient_data[0],
+                        phone_number=patient_data[1]
+                    ),
+                    first_name=patient_data[4],
+                    last_name=patient_data[5],
+                    middle_name=patient_data[6],
+                    gender=patient_data[7],
+                    birth_date=patient_data[8],
+                    snils=patient_data[9],
+                    policy=patient_data[10]
+                ), None
+            except:
+                self.conn.commit()
 
     def is_email_exists(self, email):
         cur = self.conn.cursor()

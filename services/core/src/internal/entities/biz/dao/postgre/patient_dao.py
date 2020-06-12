@@ -8,14 +8,17 @@ class PatientDaoImpl(PatientDao):
 
     def add(self, patient: Patient) -> (Patient or None, bool):
         with self.conn.cursor() as cur:
-            cur.execute("""
-            INSERT INTO patient(account_id, first_name, last_name, middle_name, gender, birth_date) 
-            VALUES (%s, %s, %s, %s, %s, %s) RETURNING id;
-            """, (patient.account.id, patient.first_name, patient.last_name, patient.middle_name, 1,
-                  patient.birth_date))
-            self.conn.commit()
-            patient.id = cur.fetchall()[0][0]
-            return patient, False
+            try:
+                cur.execute("""
+                INSERT INTO patient(account_id, first_name, last_name, middle_name, gender, birth_date) 
+                VALUES (%s, %s, %s, %s, %s, %s) RETURNING id;
+                """, (patient.account.id, patient.first_name, patient.last_name, patient.middle_name, 1,
+                      patient.birth_date))
+                self.conn.commit()
+                patient.id = cur.fetchall()[0][0]
+                return patient, False
+            except:
+                self.conn.commit()
 
     def get_by_account_id(self, account_id: int) -> (Patient or None, tuple or None):
         with self.conn.cursor() as cur:

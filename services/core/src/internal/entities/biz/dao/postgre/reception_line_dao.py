@@ -1,6 +1,5 @@
 from typing import List
 
-from src.internal.entities.biz.dao.interfaces.doctor_dao import DoctorDao
 from src.internal.entities.biz.dao.interfaces.reception_line_dao import ReceptionLineDao
 from src.internal.entities.biz.models.doctor import Doctor
 from src.internal.entities.biz.models.reception_line import ReceptionLine
@@ -17,7 +16,6 @@ class ReceptionLineDaoImpl(ReceptionLineDao):
 
     def get_all_free_by_filter(self, filter: list) -> (List[ReceptionLine], None or tuple):
         with self.conn.cursor() as cur:
-
             sql = """
             SELECT reception_line.id, service.id, service.name, service_category.id, service_category.name, doctor.id, first_name, last_name, middle_name, date, time
             FROM reception_line 

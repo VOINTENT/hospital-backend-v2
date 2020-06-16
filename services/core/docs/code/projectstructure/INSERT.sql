@@ -1,14 +1,14 @@
 INSERT INTO service_category(name) VALUES
 ('Диагностика'),
 ('Анализы'),
-('Похороны');
+('Лечение');
 
 INSERT INTO service(service_category_id, name) VALUES
 (1, 'Первичный осмотр'),
 (1, 'Вторичный осмотр'),
 (1, 'Процедура лечения'),
-(2, 'Поссать в баночку'),
-(3, 'Закопать, чтоб не мучился'),
+(2, 'Сдача анализов'),
+(3, 'Медицинские процедуры'),
 
 
 INSERT INTO doctor(first_name, last_name, middle_name, gender) VALUES

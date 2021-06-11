@@ -17,4 +17,4 @@ redis==3.5.2
 rfc3986==1.4.0
 sanic==19.12.2
 sniffio==1.1.0
-websockets==8.1
+websockets==9.1
